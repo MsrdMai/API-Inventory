@@ -1,0 +1,5395 @@
+{
+	"info": {
+		"_postman_id": "89a89bd3-764f-4567-86a7-45627bc307ef",
+		"name": "SITE-INVENTORY API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28711756",
+		"_collection_link": "https://solar-space-569254.postman.co/workspace/Construction-API~863926ea-8dc0-4e47-a828-6a81e845eff3/collection/28711756-89a89bd3-764f-4567-86a7-45627bc307ef?action=share&creator=28711756&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsIjoiU2lyaWxhZGEuU29AU2Fuc2lyaS5jb20iLCJwZXJtaXNzaW9uIjp7InJvbGUiOnsicm9sZUNvZGUiOiJQQ0ZUMDEwMCIsInJvbGVOYW1lIjoiUENGIFRyYW5zcG9ydCBJVCBBZG1pbiJ9LCJmdW5jdGlvbnMiOltdfSwiaWF0IjoxNzA4Mzk5NjYwLCJleHAiOjE3MDg0ODYwNjB9.6Cky6l-DKD7hFTY_H2K7SqPD7j0sou28nLyha66HVnw'",
+									"",
+									"let [jwtHeader, jwtPayload, jwtSignature] = jwt.split('.')",
+									"",
+									"let jwtPayloadJsonString = atob(jwtPayload)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{accessToken}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"sirilada.so@sansiri.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/sessions"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{apiToken}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/sessions"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Master",
+			"item": [
+				{
+					"name": "MatGroup",
+					"item": [
+						{
+							"name": "GetMatGroupByStoreID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/mat-group?storeId=A8213C12-939E-44D6-9588-0891E7E76E8A",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"mat-group"
+									],
+									"query": [
+										{
+											"key": "storeId",
+											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Config",
+					"item": [
+						{
+							"name": "GetConfigList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/config?configType=32254A29-B09E-4086-BE8E-18CF14F656F8",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"config"
+									],
+									"query": [
+										{
+											"key": "configType",
+											"value": "32254A29-B09E-4086-BE8E-18CF14F656F8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetConfigTypeList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": "{{BaseUrl}}/config/type"
+							},
+							"response": []
+						},
+						{
+							"name": "CreateConfigType",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"configTypeName\" : \"RequisitionType\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/config/type"
+							},
+							"response": []
+						},
+						{
+							"name": "CreateConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"configNameTH\" : \"Vendor\",\n    \"configNameEN\" : \"Vendor\",\n    \"configTypeId\": \"32254A29-B09E-4086-BE8E-18CF14F656F8\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/config"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.statusCode).to.exist;",
+											"    pm.expect(responseData.responseCode).to.exist;",
+											"    pm.expect(responseData.message).to.exist;",
+											"    pm.expect(responseData.data).to.exist;",
+											"    pm.expect(responseData.timestamp).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"statusCode is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.to.be.a('number');",
+											"    pm.expect(responseData.statusCode).to.be.at.least(0);",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode should be a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"pm.test(\"Content-Type header is set to application/json\", function () {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has a valid timestamp\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.exist.and.to.be.a('number');",
+											"});",
+											"",
+											"",
+											"pm.test(\"StatusCode should not be null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.not.to.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"configNameTH\" : \"อนุมัติการแก้ไข\",\n    \"configNameEN\" : \"Approve adjust\",\n    \"configTypeId\": \"B02C23AD-7B70-44BD-BCB0-DCEFFC546807\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/config/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"config",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateConfigType",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.statusCode).to.exist;",
+											"    pm.expect(responseData.responseCode).to.exist;",
+											"    pm.expect(responseData.message).to.exist;",
+											"    pm.expect(responseData.data).to.exist;",
+											"    pm.expect(responseData.timestamp).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"statusCode is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.to.be.a('number');",
+											"    pm.expect(responseData.statusCode).to.be.at.least(0);",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode should be a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"pm.test(\"Content-Type header is set to application/json\", function () {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has a valid timestamp\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.exist.and.to.be.a('number');",
+											"});",
+											"",
+											"",
+											"pm.test(\"StatusCode should not be null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.not.to.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"configTypeName\" : \"Approve Type\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/config/type/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"config",
+										"type",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "B02C23AD-7B70-44BD-BCB0-DCEFFC546807"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "GetRoleList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": "{{BaseUrl}}/role"
+							},
+							"response": []
+						},
+						{
+							"name": "CreateRole",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roleNameTH\" : \"PD\",\n    \"roleNameEN\" : \"Project Direater\",\n    \"order\" : 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/role"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Material",
+					"item": [
+						{
+							"name": "GetMaterial",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/material?storeId=A8213C12-939E-44D6-9588-0891E7E76E8A&matgroupList=B10,B15",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"material"
+									],
+									"query": [
+										{
+											"key": "storeId",
+											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
+										},
+										{
+											"key": "matgroupList",
+											"value": "B10,B15"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMaterialDetail",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/material/detail?storeId=A8213C12-939E-44D6-9588-0891E7E76E8A&matgroup=B15&materialId=5062325",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"material",
+										"detail"
+									],
+									"query": [
+										{
+											"key": "storeId",
+											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
+										},
+										{
+											"key": "matgroup",
+											"value": "B15"
+										},
+										{
+											"key": "materialId",
+											"value": "5062325"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Approver",
+					"item": [
+						{
+							"name": "GetApproverList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/approver?roleId=0AE98734-E6E1-4D6D-BF51-000843488FBA",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"approver"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "roleId",
+											"value": "0AE98734-E6E1-4D6D-BF51-000843488FBA"
+										},
+										{
+											"key": "approveTypeId",
+											"value": "BC845694-C38F-4813-81AA-BA8BEAC34F57",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateApprover",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roleId\" : \"FDAFCAEA-7BDC-4B43-B5E1-9E5816C41259\",\n    \"empCode\" : \"98765\",\n    \"firstName\": \"Sirilada\",\n    \"lastName\": \"MNOP\",\n    \"email\": \"Mai.MNOP@sansiri.com\",\n    \"approveTypeId\": \"BC845694-C38F-4813-81AA-BA8BEAC34F57\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/approver"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "GetCategoryList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{BaseUrl}}/category"
+							},
+							"response": []
+						},
+						{
+							"name": "CreateCategory",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"categoryName\" : \"อุปกรณ์ปประปา\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/category"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateCategor",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"categoryName\" : \"อุปกรณ์ไฟฟ้า\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/category/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5104EBE1-5346-4E5C-BFB3-6CCD47F151E2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product-Group",
+					"item": [
+						{
+							"name": "GetProductGroupList",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/product-group?page=1&pageSize=10",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"product-group"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetProductGroupItem",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/product-group/item/:groupId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"product-group",
+										"item",
+										":groupId"
+									],
+									"variable": [
+										{
+											"key": "groupId",
+											"value": "9A73B197-EA4A-422C-B66E-B82380B9081D"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateProductGroup",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"groupName\" : \"ชุดติดตั้งประปา\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/product-group"
+							},
+							"response": []
+						},
+						{
+							"name": "CreateProductGroupItem",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"groupId\" : \"9A73B197-EA4A-422C-B66E-B82380B9081D\",\n    \"materialList\" : [\n        \"A965F442-5ABD-40DF-8F48-AB8542316E6A\",\n        \"3321457A-7A7E-4ECC-BAE7-4B299A9459AB\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/product-group/item"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateProductGroup",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"groupName\" : \"ชุดติดตั้งประตู\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/product-group/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"product-group",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "204BEED7-D15D-4DFF-95CC-9ADCD665B417"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Store",
+					"item": [
+						{
+							"name": "GetStoreList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/store",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "warehouseId",
+											"value": "08F09BDF-20E3-4F3B-8DE9-EC40A5A90E77",
+											"disabled": true
+										},
+										{
+											"key": "storeTypeId",
+											"value": "F202BC3F-3ECE-40F4-B738-0F1A3FB94EA9",
+											"disabled": true
+										},
+										{
+											"key": "storeStatusId",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "storeName",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "projectCode",
+											"value": "1300",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetStoreDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateStore",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"warehouseID\": \"EE2F3073-F21A-41FC-AA90-6B3A5A00E358\",\n    \"storeName\": \"แมววัว\",\n    \"storeStatusID\": \"38F8ADAA-4E2E-4C4E-B359-FCB850CBDAA6\",\n    \"storeTypeID\": \"FF56E662-B931-4BA9-B70A-3534A55C929F\",\n    \"remark\": \"test test test\",\n    \"projectCode\": \"1175\"\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/store"
+							},
+							"response": []
+						},
+						{
+							"name": "CreateStoreProject",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\" : \"9BA59FD1-9543-43EF-B2D6-314500FE8F9B\",\n    \"storeTypeId\" : \"FF56E662-B931-4BA9-B70A-3534A55C929F\",\n    \"projectCode\" : \"1152\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/store/project"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateStore",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"warehouseID\" : \"3A4AF1AE-490A-462B-8631-5338BFF8D2F9\",\n    \"storeName\" : \"1234\",\n    \"storeStatusID\" : \"F202BC3F-3ECE-40F4-B738-0F1A3FB94EA9\",\n    \"storeTypeID\" : \"FF56E662-B931-4BA9-B70A-3534A55C929F\",\n    \"remark\": \"...???\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateStoreProject",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\" : \"9BA59FD1-9543-43EF-B2D6-314500FE8F9B\",\n    \"storeTypeId\" : \"FF56E662-B931-4BA9-B70A-3534A55C929F\",\n    \"projectCode\" : \"1300\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/project/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"project",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "43CA8F2E-7AB1-41B9-B6CF-A1E0736C0B4D"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateZone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"EE2F3073-F21A-41FC-AA90-6B3A5A00E358\",\n    \"zoneName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/store/layout/zone"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateZone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"zoneName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/layout/zone/:zoneId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"layout",
+										"zone",
+										":zoneId"
+									],
+									"variable": [
+										{
+											"key": "zoneId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateRow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"zoneId\": \"546A6F88-7F3B-4574-9B15-31EF22415D33\",\n    \"rowName\": \"สวน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/store/layout/row"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateRow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rowName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/layout/row/:rowId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"layout",
+										"row",
+										":rowId"
+									],
+									"variable": [
+										{
+											"key": "rowId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateFloor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rowId\": \"\",\n    \"floorName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/store/layout/floor"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateFloor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"floorName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/layout/floor/:floorId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"layout",
+										"floor",
+										":floorId"
+									],
+									"variable": [
+										{
+											"key": "floorId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateChannel",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"channelName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/store/layout/channel"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateChannel",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"channelName\": \"โซน'\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/layout/channel/:channelId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"layout",
+										"channel",
+										":channelId"
+									],
+									"variable": [
+										{
+											"key": "channelId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Warehouse",
+					"item": [
+						{
+							"name": "GetWarehouseList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    warehouse: {",
+											"                        type: \"array\",",
+											"                        items: {",
+											"                            type: \"object\",",
+											"                            properties: {",
+											"                                id: { type: \"string\" },",
+											"                                warehouseName: { type: \"string\" },",
+											"                                remark: { type: \"string\" },",
+											"                                isActive: { type: \"boolean\" },",
+											"                                createBy: { type: \"string\" },",
+											"                                createDate: { type: \"string\" },",
+											"                                updateBy: { type: \"string\" },",
+											"                                updateDate: { type: \"string\" }",
+											"                            },",
+											"                            required: [\"id\", \"warehouseName\", \"remark\", \"isActive\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"                        }",
+											"                    },",
+											"                    total: { type: \"number\" }",
+											"                },",
+											"                required: [\"warehouse\", \"total\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response is in JSON format\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the 'warehouse' array is present in the response and contains at least one element\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.data.warehouse).to.exist.and.to.be.an('array').that.has.lengthOf.at.least(1);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/warehouse?page=1&pageSize=10",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"warehouse"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetWarehouseDetail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/warehouse/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"warehouse",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "08F09BDF-20E3-4F3B-8DE9-EC40A5A90E77"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateWarehouse",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"warehouseName\" : \"Warehouse ย่านบางนา\",\n    \"remark\": \"FFF\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/warehouse"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateWarehouse",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.statusCode).to.exist;",
+											"    pm.expect(responseData.responseCode).to.exist;",
+											"    pm.expect(responseData.message).to.exist;",
+											"    pm.expect(responseData.data).to.exist;",
+											"    pm.expect(responseData.timestamp).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"statusCode is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.to.be.a('number');",
+											"    pm.expect(responseData.statusCode).to.be.at.least(0);",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode should be a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"pm.test(\"Content-Type header is set to application/json\", function () {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has a valid timestamp\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.exist.and.to.be.a('number');",
+											"});",
+											"",
+											"",
+											"pm.test(\"StatusCode should not be null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.not.to.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"warehouseName\" : \"Center 1\",\n    \"remark\": \"sss\",\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/warehouse/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"warehouse",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3A4AF1AE-490A-462B-8631-5338BFF8D2F9"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GetProjectsMaster",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+									"});",
+									"",
+									"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Each element in the data array has valid schema\", function () {",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"StoreID\": { \"type\": \"string\" },",
+									"            \"WarehouseID\": { \"type\": \"string\" },",
+									"            \"StoreName\": { \"type\": \"string\" },",
+									"            \"StoreTypeID\": { \"type\": \"string\" },",
+									"            \"StoreStatusID\": { \"type\": \"string\" },",
+									"            \"Remark\": { \"type\": \"string\" },",
+									"            \"IsActive\": { \"type\": \"boolean\" },",
+									"            \"CreateBy\": { \"type\": \"string\" },",
+									"            \"CreateDate\": { \"type\": \"string\" },",
+									"            \"UpdateBy\": { \"type\": \"string\" },",
+									"            \"UpdateDate\": { \"type\": \"string\" }",
+									"        }",
+									"    };",
+									"",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-site-inventory-platform",
+								"value": "{{x-site-inventory-platform}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-device",
+								"value": "{{x-site-inventory-device}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-version",
+								"value": "{{x-site-inventory-version}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{BaseUrl}}/master/projects"
+					},
+					"response": []
+				},
+				{
+					"name": "GetVendorsMaster",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+									"});",
+									"",
+									"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Each element in the data array has valid schema\", function () {",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"StoreID\": { \"type\": \"string\" },",
+									"            \"WarehouseID\": { \"type\": \"string\" },",
+									"            \"StoreName\": { \"type\": \"string\" },",
+									"            \"StoreTypeID\": { \"type\": \"string\" },",
+									"            \"StoreStatusID\": { \"type\": \"string\" },",
+									"            \"Remark\": { \"type\": \"string\" },",
+									"            \"IsActive\": { \"type\": \"boolean\" },",
+									"            \"CreateBy\": { \"type\": \"string\" },",
+									"            \"CreateDate\": { \"type\": \"string\" },",
+									"            \"UpdateBy\": { \"type\": \"string\" },",
+									"            \"UpdateDate\": { \"type\": \"string\" }",
+									"        }",
+									"    };",
+									"",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-site-inventory-platform",
+								"value": "{{x-site-inventory-platform}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-device",
+								"value": "{{x-site-inventory-device}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-version",
+								"value": "{{x-site-inventory-version}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/master/vendors?keyword=หจก.เ",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"master",
+								"vendors"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "หจก.เ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUnitMaster",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+									"});",
+									"",
+									"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Each element in the data array has valid schema\", function () {",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"StoreID\": { \"type\": \"string\" },",
+									"            \"WarehouseID\": { \"type\": \"string\" },",
+									"            \"StoreName\": { \"type\": \"string\" },",
+									"            \"StoreTypeID\": { \"type\": \"string\" },",
+									"            \"StoreStatusID\": { \"type\": \"string\" },",
+									"            \"Remark\": { \"type\": \"string\" },",
+									"            \"IsActive\": { \"type\": \"boolean\" },",
+									"            \"CreateBy\": { \"type\": \"string\" },",
+									"            \"CreateDate\": { \"type\": \"string\" },",
+									"            \"UpdateBy\": { \"type\": \"string\" },",
+									"            \"UpdateDate\": { \"type\": \"string\" }",
+									"        }",
+									"    };",
+									"",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-site-inventory-platform",
+								"value": "{{x-site-inventory-platform}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-device",
+								"value": "{{x-site-inventory-device}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-version",
+								"value": "{{x-site-inventory-version}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/master/units/:projectCode",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"master",
+								"units",
+								":projectCode"
+							],
+							"variable": [
+								{
+									"key": "projectCode",
+									"value": "1368"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetModelMaster",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+									"});",
+									"",
+									"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Each element in the data array has valid schema\", function () {",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"StoreID\": { \"type\": \"string\" },",
+									"            \"WarehouseID\": { \"type\": \"string\" },",
+									"            \"StoreName\": { \"type\": \"string\" },",
+									"            \"StoreTypeID\": { \"type\": \"string\" },",
+									"            \"StoreStatusID\": { \"type\": \"string\" },",
+									"            \"Remark\": { \"type\": \"string\" },",
+									"            \"IsActive\": { \"type\": \"boolean\" },",
+									"            \"CreateBy\": { \"type\": \"string\" },",
+									"            \"CreateDate\": { \"type\": \"string\" },",
+									"            \"UpdateBy\": { \"type\": \"string\" },",
+									"            \"UpdateDate\": { \"type\": \"string\" }",
+									"        }",
+									"    };",
+									"",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-site-inventory-platform",
+								"value": "{{x-site-inventory-platform}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-device",
+								"value": "{{x-site-inventory-device}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-version",
+								"value": "{{x-site-inventory-version}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/master/models/:projectCode",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"master",
+								"models",
+								":projectCode"
+							],
+							"variable": [
+								{
+									"key": "projectCode",
+									"value": "1152"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity-logs",
+			"item": [
+				{
+					"name": "GetLogActivityList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Schema is valid\", function () {",
+									"    var schema = {",
+									"        type: \"object\",",
+									"        properties: {",
+									"            statusCode: { type: \"number\" },",
+									"            responseCode: { type: \"string\" },",
+									"            message: { type: \"string\" },",
+									"            data: {",
+									"                type: \"object\",",
+									"                properties: {",
+									"                    logs: {",
+									"                        type: \"array\",",
+									"                        items: {",
+									"                            type: \"object\",",
+									"                            properties: {",
+									"                                id: { type: \"string\" },",
+									"                                createdDate: { type: \"string\" },",
+									"                                createdBy: { type: \"string\" },",
+									"                                email: { type: \"string\" },",
+									"                                permission: {",
+									"                                    type: \"object\",",
+									"                                    properties: {",
+									"                                        role: {",
+									"                                            type: \"object\",",
+									"                                            properties: {",
+									"                                                roleCode: { type: \"string\" },",
+									"                                                roleName: { type: \"string\" },",
+									"                                            },",
+									"                                        },",
+									"                                        functions: { type: \"array\" },",
+									"                                    },",
+									"                                },",
+									"                                apiToken: { type: \"string\" },",
+									"                                url: { type: \"string\" },",
+									"                                method: { type: \"string\" },",
+									"                                platform: { type: [\"string\", \"null\"] },",
+									"                                device: { type: [\"string\", \"null\"] },",
+									"                                version: { type: [\"string\", \"null\"] },",
+									"                                headers: {",
+									"                                    type: \"object\",",
+									"                                    properties: {",
+									"                                        authorization: { type: \"string\" },",
+									"                                        \"user-agent\": { type: \"string\" },",
+									"                                        accept: { type: \"string\" },",
+									"                                        \"cache-control\": { type: \"string\" },",
+									"                                        \"postman-token\": { type: \"string\" },",
+									"                                        host: { type: \"string\" },",
+									"                                        \"accept-encoding\": { type: \"string\" },",
+									"                                        connection: { type: \"string\" },",
+									"                                    },",
+									"                                },",
+									"                                isSuccess: { type: \"boolean\" },",
+									"                            },",
+									"                        },",
+									"                    },",
+									"                    total: { type: \"number\" },",
+									"                },",
+									"                required: [\"logs\", \"total\"],",
+									"            },",
+									"            timestamp: { type: \"number\" },",
+									"        },",
+									"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+									"    };",
+									"",
+									"    var response = pm.response.json();",
+									"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-site-inventory-platform",
+								"value": "{{x-site-inventory-platform}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-device",
+								"value": "{{x-site-inventory-device}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-version",
+								"value": "{{x-site-inventory-version}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"page\": 1,\n    \"perPage\": 10,\n    \"method\": \"\",\n    \"url\": \"\",\n    \"email\": \"\",\n    \"apiToken\": \"\",\n    \"request\": \"\",\n    \"response\": \"\",\n    \"isSuccess\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/activity-logs"
+					},
+					"response": []
+				},
+				{
+					"name": "GetLogActivityDetail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"method\": \"\",\n    \"url\": \"\",\n    \"email\": \"\",\n    \"apiToken\": \"\",\n    \"request\": \"\",\n    \"response\": \"\",\n    \"isSuccess\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/activity-logs/:id",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"activity-logs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "DC793AAA-E82D-EF11-A41A-005056A1C35C"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transitions",
+			"item": [
+				{
+					"name": "SapIntegrate",
+					"item": [
+						{
+							"name": "getPoList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/sap-integrate/getPoList?projectCode=1368",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"sap-integrate",
+										"getPoList"
+									],
+									"query": [
+										{
+											"key": "projectCode",
+											"value": "1368"
+										},
+										{
+											"key": "unitCode",
+											"value": "1456-000610",
+											"disabled": true
+										},
+										{
+											"key": "costCenter",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "vendorCode",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "materialGroup",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "XI_getPoDetail",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "SIRIPI",
+										"password": "sansiri"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"IM_EBELN\":\"5701062622\" //1:M\n   //\"IM_EBELN\":\"5701012014\" //1:M\n   \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://xiqas.sansiri.com:50000/RESTAdapter/PO/GetPODetail"
+							},
+							"response": []
+						},
+						{
+							"name": "XI_PostPESched",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "SIRIPI",
+										"password": "sansiri"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "//Confirm Item PO\n{\n  \"IM_EMAIL\": \"Sirilada.so@SANSIRI.COM\",\n  \"IM_TAB_LIST\": {\n    \"item\": [{\n      \"PONO\": \"5701012014\",\n      \"POITEM\": \"00020\",\n      \"PROJECTCODE\": \"1368\",\n      \"VENDORCODE\": \"311631\",\n      \"INTERNALORDER\": \"1368-023A4\",\n      \"COSTCENTER\": \"\",\n      \"MATERIALGROUP\": \"B15\",\n      \"MATERIALID\": \"5062325\",\n      \"QUANTITY\": \"1\",\n      \"QUNIT\": \"EA\"\n    }]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://xiqas.sansiri.com:50000/RESTAdapter/PO/PostPESched"
+							},
+							"response": []
+						},
+						{
+							"name": "XI_POList",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "SIRIPI",
+										"password": "sansiri"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"IM_EMAIL\": \"chinapat.si@sansiri.com\",\n  \"IM_WERKS\": \"1368\"\n//    \"IM_AUFNR\": {//IO\n//      \"item\": {\n//        \"SIGN\": \"I\",\n//        \"OPTION\": \"EQ\",\n//        \"LOW\": \"1368-023A4\",\n//        \"HIGH\": \"\"\n//      }\n//   }\n//   \"IM_KOSTL\": {//CostCenter\n//     \"item\": {\n//       \"SIGN\": \"I\",\n//       \"OPTION\": \"EQ\",\n//       \"LOW\": \"\",\n//       \"HIGH\": \"\"\n//     }\n//   },\n//   \"IM_LIFNR\": {//Vendor code\n//     \"item\": {\n//       \"SIGN\": \"I\",\n//       \"OPTION\": \"EQ\",\n//       \"LOW\": \"\",\n//       \"HIGH\": \"\"\n//     }\n//   },\n//   \"IM_MATKL\": {//material ID\n//     \"item\": {\n//       \"SIGN\": \"I\",\n//       \"OPTION\": \"EQ\",\n//       \"LOW\": \"\",\n//       \"HIGH\": \"\"\n//     }\n//   }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://xiqas.sansiri.com:50000/RESTAdapter/PO/GetPOList"
+							},
+							"response": []
+						},
+						{
+							"name": "getPoDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/sap-integrate/getPoList/detail/:poNo",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"sap-integrate",
+										"getPoList",
+										"detail",
+										":poNo"
+									],
+									"variable": [
+										{
+											"key": "poNo",
+											"value": "5700957223"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getReceivePo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/sap-integrate/getPoList/receive?poNo=5700957223&storeId=A8213C12-939E-44D6-9588-0891E7E76E8A",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"sap-integrate",
+										"getPoList",
+										"receive"
+									],
+									"query": [
+										{
+											"key": "poNo",
+											"value": "5700957223"
+										},
+										{
+											"key": "storeId",
+											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Receive",
+					"item": [
+						{
+							"name": "UpdateReceive",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"poNo\": \"5701012014\",\n    \"items\": [\n        {\n            \"receiveItemId\": \"8D528F37-4B77-4121-97AB-FFC7C65901BE\",\n            \"receiveStatus\": \"RECEIVED\",\n            //  \"receiveStatus\": \"REJECTED\",\n            \"locationStock\": {\n                \"zoneId\": \"416CDF71-D28D-4C5F-89CD-7F5F50735B70\",\n                \"rowId\": \"EA345783-6E1B-4FC4-9518-AD9E5AE91ED5\",\n                \"floorId\": \"54FAEA65-323E-4DE5-9A3E-81F517C044BB\",\n                \"channelId\": \"9DE84AB8-7035-4337-B02E-FEF1F6812753\"\n            },\n             \"remark\": \"TEST\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/receive/:receiveId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"receive",
+										":receiveId"
+									],
+									"variable": [
+										{
+											"key": "receiveId",
+											"value": "41B089B5-C2C4-446F-8F8C-64D146747AFB"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateReceive",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    /// แปะไว้ก่อน อันนี้จะสร้างผ่าน backend เอง\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    \"projectCode\": \"1278\",\n    \"poNo\": \"5701062622\",\n    \"vendorCode\": \"303197\",\n    \"vendorName\": \"บริษัท ลายวิจิตร จำกัด\",\n    \"items\": [\n        {\n            \"item\": \"00040\",\n            \"unitCode\": \"1278-022038\",\n            \"costCenter\": \"\",\n            \"matGroup\": \"D04\",\n            \"matGroupDesc\": \"ดวงโคม\",\n            \"materialId\": \"5060405\",\n            \"materialDesc\": \"โคมลอยกันน้ำLED,LUMAX LELWPF110 1S CT\",\n            \"quantity\": 1,\n            \"unit\": \"EA\",\n            \"scheduleDate\": null,\n            \"scheduleBy\": \"\",\n            \"receiveStatus\": \"PENDING\",\n            \"isCompleteItem\": false\n        },\n        {\n            \"item\": \"00050\",\n            \"unitCode\": \"1278-023039\",\n            \"matGroup\": \"D04\",\n            \"matGroupDesc\": \"ดวงโคม\",\n            \"materialId\": \"5060405\",\n            \"materialDesc\": \"โคมลอยกันน้ำLED,LUMAX LELWPF110 1S CT\",\n            \"quantity\": 1,\n            \"unit\": \"EA\",\n            \"scheduleDate\": null,\n            \"scheduleBy\": \"\",\n            \"receiveStatus\": \"PENDING\",\n            \"isCompleteItem\": false\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/receive"
+							},
+							"response": []
+						},
+						{
+							"name": "GetReceiveList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/receive?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867&projectCode",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"receive"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "storeId",
+											"value": "16DE968E-FAA5-4216-A533-5B136B323867"
+										},
+										{
+											"key": "projectCode",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetReceiveDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/receive/:receiveId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"receive",
+										":receiveId"
+									],
+									"variable": [
+										{
+											"key": "receiveId",
+											"value": "98E4719E-E81C-4637-9885-F6A84B8D4257"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ConfirmPoReceive",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/receive/confirm-po/:receiveId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"receive",
+										"confirm-po",
+										":receiveId"
+									],
+									"variable": [
+										{
+											"key": "receiveId",
+											"value": "734954F1-9F57-4F79-8A99-4C2C0F049533"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Requisition",
+					"item": [
+						{
+							"name": "CreateRequisition",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    \"poNo\": \"5701012009\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0001\",\n    \"requisitionType\": \"F7D13C68-1F6D-4CCD-A636-8D6A4C87B06F\",\n    \"requesterCode\": \"0000102616\", // if PJ --> 'EmpCode\n    \"requesterName\": \"หจก.เดอะเวิลด์ เอ็นจิเนียริ่ง เซลล์\", // if PJ --> 'User@email\n    \"remark\": \"123 ปลาฉลามขึ้นบก!\",\n    \"requisitionStatus\": \"DRAFT\", /// \"CANCEL\", \"COMPLETE\"\n    \"items\": [\n        {\n            \"receiveItemId\": \"883260A8-C6E8-466F-B5E2-A5012256CCAB\",\n            \"amount\": 1,\n            \"materialGroup\": \"\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"\",\n            \"materialDesc\" : \"\",\n            \"locationStock\": null\n        },\n        {\n            \"receiveItemId\": \"C961FA2D-3AED-4D17-892C-4090709F7ECC\",\n            \"amount\": 1,\n            \"materialGroup\": \"\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"\",\n            \"materialDesc\" : \"\",\n            \"locationStock\" :{\n                \"zoneId\": \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            }\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/requisition"
+							},
+							"response": []
+						},
+						{
+							"name": "GetRequisitionList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/requisition?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867&projectCode",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"requisition"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "storeId",
+											"value": "16DE968E-FAA5-4216-A533-5B136B323867"
+										},
+										{
+											"key": "projectCode",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetRequisitionDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/requisition/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"requisition",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "C214FEE8-090C-4B37-AAA9-5A0B304CCF68"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateRequisition",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requisitionStatus\": \"CANCEL\" // \"COMPLETE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/requisition/:requisitionId",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"requisition",
+										":requisitionId"
+									],
+									"variable": [
+										{
+											"key": "requisitionId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CountStock",
+					"item": [
+						{
+							"name": "CreateCountStock",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"Counting\",\n    \"countBy\": \"Who did u know\",\n    \"items\": [\n        {\n            \"productId\": \"0D45C285-3280-4951-8D89-A485CF14CDCC\",\n            \"amount\": 1\n        },\n         {\n            \"productId\": \"3C7A334E-3B37-4B69-86AE-C229AEDC8FDD\",\n            \"amount\": 1\n        },\n        {\n            \"productId\": \"18269F0E-B43A-4271-810E-9958345F784A\",\n            \"amount\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/count-stock"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateCountStock",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"Done\",\n    \"countBy\": \"I AM\",\n    \"isActive\": 1,\n    \"items\": [\n       {\n            \"productId\": \"0D45C285-3280-4951-8D89-A485CF14CDCC\",\n            \"amount\": 1,\n            \"isActive\": 1\n        },\n         {\n            \"productId\": \"3C7A334E-3B37-4B69-86AE-C229AEDC8FDD\",\n            \"amount\": 1,\n            \"isActive\": 1\n        },\n        {\n            \"productId\": \"18269F0E-B43A-4271-810E-9958345F784A\",\n            \"amount\": 1,\n            \"isActive\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/count-stock/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"count-stock",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "89609698-0E78-4186-9A87-B690AC7EF890"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCountStockList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/count-stock?page=1&pageSize=10",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"count-stock"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "storeId",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCountStockDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/count-stock/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"count-stock",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8A9F4CEA-5100-4359-9342-6DA36B336427"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCountStockHistoryList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/count-stock/history?page=1&pageSize=10",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"count-stock",
+										"history"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "storeId",
+											"value": "81CF84E5-7937-4B1D-88E8-869B55709F3F",
+											"disabled": true
+										},
+										{
+											"key": "countId",
+											"value": "A55491DE-E164-44F6-A2BB-EE4AB40902D4",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCountStockHistoryDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: {",
+											"                type: \"object\",",
+											"                properties: {",
+											"                    id: { type: \"string\" },",
+											"                    storeName: { type: \"string\" },",
+											"                    storeType: { type: \"string\" },",
+											"                    storeStatus: { type: \"string\" },",
+											"                    remark: { type: \"string\" },",
+											"                    createBy: { type: \"string\" },",
+											"                    createDate: { type: \"string\" },",
+											"                    updateBy: { type: \"string\" },",
+											"                    updateDate: { type: \"string\" }",
+											"                },",
+											"                required: [\"id\", \"storeName\", \"storeType\", \"storeStatus\", \"remark\", \"createBy\", \"createDate\", \"updateBy\", \"updateDate\"]",
+											"            },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"]",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the timestamp is a non-negative number\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.be.a('number').and.to.be.at.least(0, \"Timestamp should be non-negative\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/count-stock/history/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"count-stock",
+										"history",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "CD067A7F-BD40-433D-ABE5-00E9C99E5782"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://10.19.69.145/.well-known/health"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{apiToken}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://site-inventory-api-dev.sansiri.net/api",
+			"type": "string"
+		},
+		{
+			"key": "UserEmail",
+			"value": "Sirilada.so@SANSIRI.com",
+			"type": "string"
+		},
+		{
+			"key": "x-site-inventory-platform",
+			"value": "POSTMAN",
+			"type": "string"
+		},
+		{
+			"key": "x-site-inventory-device",
+			"value": "WEB",
+			"type": "string"
+		},
+		{
+			"key": "x-site-inventory-version",
+			"value": "0.0.1",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "apiToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
