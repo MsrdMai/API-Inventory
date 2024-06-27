@@ -648,7 +648,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"configNameTH\" : \"อนุมัติการแก้ไข\",\n    \"configNameEN\" : \"Approve adjust\",\n    \"configTypeId\": \"B02C23AD-7B70-44BD-BCB0-DCEFFC546807\",\n    \"isActive\": 1\n}",
+									"raw": "{\n    \"configNameTH\" : \"อนุมัติการแก้ไข\",\n    \"configNameEN\" : \"Approve adjust\",\n    // \"configTypeId\": \"B02C23AD-7B70-44BD-BCB0-DCEFFC546807\",\n    \"isActive\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4413,7 +4413,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    \"poNo\": \"5701012009\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0001\",\n    // \"requesterCode\": \"0000102616\", // if PJ --> 'EmpCode\n    // \"requesterName\": \"หจก.เดอะเวิลด์ เอ็นจิเนียริ่ง เซลล์\", // if PJ --> 'User@email\n   \"vendor\": {\n        \"vendorCode\": \"\",\n        \"vendorName\":\"\"\n    },\n    \"employee\": {\n        \"empCode\": \"\",\n        \"empEmail\":\"\"\n    },\n    \"remark\": \"123 ปลาฉลามขึ้นบก!\",\n    \"requisitionStatus\": \"DRAFT\", /// \"CANCEL\", \"COMPLETE\"\n    \"items\": [\n        {\n            \"receiveItemId\": \"883260A8-C6E8-466F-B5E2-A5012256CCAB\",\n            \"amount\": 1,\n            \"materialGroup\": \"\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"\",\n            \"materialDesc\" : \"\",\n            \"locationStock\": null,\n            \"remark\": null\n        },\n        {\n            \"receiveItemId\": \"C961FA2D-3AED-4D17-892C-4090709F7ECC\",\n            \"amount\": 1,\n            \"materialGroup\": \"\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"\",\n            \"materialDesc\" : \"\",\n            \"locationStock\" :{\n                \"zoneId\": \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            },\n             \"remark\": null\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    \"poNo\": \"5701012011\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0001\",\n    // \"vendor\": {\n    //     \"vendorCode\": \"\",\n    //     \"vendorName\": \"\"\n    // },\n    // \"employee\": {\n    //     \"empCode\": \"\",\n    //     \"empEmail\": \"\"\n    // },\n    \"remark\": \"123 ปลาฉลามขึ้นบก!\",\n    \"requisitionStatus\": \"DRAFT\", /// \"CANCEL\", \"COMPLETE\"\n    \"items\": [\n        {\n            \"receiveItemId\": \"1DC1DB79-5896-4102-8B50-43C117440F19\",\n            \"amount\": 1,\n            \"materialGroup\": \"B15\",\n            \"materialGroupDesc\": \"บันไดสำเร็จรูป\",\n            \"materialId\": \"5062324\",\n            \"materialDesc\": \"ค่าวัสดุชุดราวบันไดเหล็ก\",\n            \"locationStock\": null,\n            \"remark\": null\n        },\n        {\n            \"receiveItemId\": \"F4EF0610-CFD3-4B51-AD0E-926342E2793A\",\n            \"amount\": 1,\n            \"materialGroup\": \"B15\",\n            \"materialGroupDesc\": \"บันไดสำเร็จรูป\",\n            \"materialId\": \"5062325\",\n            \"materialDesc\": \"ค่าวัสดุชุดราวบันไดเหล็ก\",\n            \"locationStock\": {\n                \"zoneId\": \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            },\n            \"remark\": null\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4509,7 +4509,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/requisition?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867&projectCode",
+									"raw": "{{BaseUrl}}/requisition?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867&receiveFront=1&requisitionStatus=COMPLETE",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -4530,8 +4530,12 @@
 											"value": "16DE968E-FAA5-4216-A533-5B136B323867"
 										},
 										{
-											"key": "projectCode",
-											"value": null
+											"key": "receiveFront",
+											"value": "1"
+										},
+										{
+											"key": "requisitionStatus",
+											"value": "COMPLETE"
 										}
 									]
 								}
