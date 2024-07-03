@@ -2655,6 +2655,158 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "ActiveStore",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/active/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"active",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "InActiveStore",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" }",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/store/in-active/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"in-active",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
