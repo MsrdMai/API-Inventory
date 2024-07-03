@@ -3966,7 +3966,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"poNo\": \"5701012014\",\n    \"items\": [\n        {\n            \"receiveItemId\": \"8D528F37-4B77-4121-97AB-FFC7C65901BE\",\n            \"receiveStatus\": \"RECEIVED\",\n            //  \"receiveStatus\": \"REJECTED\",\n            \"locationStock\": {\n                \"zoneId\": \"416CDF71-D28D-4C5F-89CD-7F5F50735B70\",\n                \"rowId\": \"EA345783-6E1B-4FC4-9518-AD9E5AE91ED5\",\n                \"floorId\": \"54FAEA65-323E-4DE5-9A3E-81F517C044BB\",\n                \"channelId\": \"9DE84AB8-7035-4337-B02E-FEF1F6812753\"\n            },\n             \"remark\": \"TEST\"\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"\",\n    \"poNo\": \"5701012014\",\n    \"items\": [\n        {\n            \"receiveItemId\": \"8D528F37-4B77-4121-97AB-FFC7C65901BE\",\n            \"receiveStatus\": \"RECEIVED\",\n            //  \"receiveStatus\": \"REJECTED\",\n            \"locationStock\": {\n                \"zoneId\": \"416CDF71-D28D-4C5F-89CD-7F5F50735B70\",\n                \"rowId\": \"EA345783-6E1B-4FC4-9518-AD9E5AE91ED5\",\n                \"floorId\": \"54FAEA65-323E-4DE5-9A3E-81F517C044BB\",\n                \"channelId\": \"9DE84AB8-7035-4337-B02E-FEF1F6812753\"\n            },\n             \"remark\": \"TEST\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4304,8 +4304,7 @@
 											"",
 											""
 										],
-										"type": "text/javascript",
-										"packages": {}
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -4413,7 +4412,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    \"poNo\": \"5701012011\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0001\",\n    // \"vendor\": {\n    //     \"vendorCode\": \"\",\n    //     \"vendorName\": \"\"\n    // },\n    // \"employee\": {\n    //     \"empCode\": \"\",\n    //     \"empEmail\": \"\"\n    // },\n    \"remark\": \"123 ปลาฉลามขึ้นบก!\",\n    \"requisitionStatus\": \"DRAFT\", /// \"CANCEL\", \"COMPLETE\"\n    \"items\": [\n        {\n            \"receiveItemId\": \"1DC1DB79-5896-4102-8B50-43C117440F19\",\n            \"amount\": 1,\n            \"materialGroup\": \"B15\",\n            \"materialGroupDesc\": \"บันไดสำเร็จรูป\",\n            \"materialId\": \"5062324\",\n            \"materialDesc\": \"ค่าวัสดุชุดราวบันไดเหล็ก\",\n            \"locationStock\": null,\n            \"remark\": null\n        },\n        {\n            \"receiveItemId\": \"F4EF0610-CFD3-4B51-AD0E-926342E2793A\",\n            \"amount\": 1,\n            \"materialGroup\": \"B15\",\n            \"materialGroupDesc\": \"บันไดสำเร็จรูป\",\n            \"materialId\": \"5062325\",\n            \"materialDesc\": \"ค่าวัสดุชุดราวบันไดเหล็ก\",\n            \"locationStock\": {\n                \"zoneId\": \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            },\n            \"remark\": null\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    // \"poNo\": \"\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0084\",\n    \"requisitionStatus\": \"DRAFT\",\n    \"remark\": \"LOL\",\n    \"vendor\": {\n        \"vendorCode\": \"0000302212\",\n        \"vendorName\": \"หจก. เซ็นทรัลการ์เด้น\"\n    },\n    \"items\": [\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": null,\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"E780C9A6-6CB8-4A39-A4D9-C3F9AEF2AF53\",\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062770\",\n            \"materialDesc\": \"AD3 ประตูบานเลื่อน 1 ติดตาย 1\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"A141D824-6EB0-4F18-BE01-231D62BBD217\",\n                \"floorId\": \"E62DC0E9-FEE5-4F3A-9729-9F48AD616440\",\n                \"channelId\": null\n            },\n            \"remark\": \"WOW\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4509,7 +4508,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/requisition?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867&receiveFront=1&requisitionStatus=COMPLETE",
+									"raw": "{{BaseUrl}}/requisition?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867&receiveFront=0",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -4531,11 +4530,12 @@
 										},
 										{
 											"key": "receiveFront",
-											"value": "1"
+											"value": "0"
 										},
 										{
 											"key": "requisitionStatus",
-											"value": "COMPLETE"
+											"value": "COMPLETE",
+											"disabled": true
 										}
 									]
 								}
@@ -4702,7 +4702,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"requisitionStatus\": \"CANCEL\" // \"COMPLETE\"\n}",
+									"raw": "{\n    \"storeId\": \"\",\n    \"requisitionStatus\": \"CANCEL\" // \"COMPLETE\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4721,7 +4721,7 @@
 									"variable": [
 										{
 											"key": "requisitionId",
-											"value": null
+											"value": "4C4C3474-6BE6-4696-B036-F1C9CA175E4A"
 										}
 									]
 								}
