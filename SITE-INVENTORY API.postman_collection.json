@@ -4936,7 +4936,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"Counting\",\n    \"countBy\": \"Who did u know\",\n    \"items\": [\n        {\n            \"productId\": \"0D45C285-3280-4951-8D89-A485CF14CDCC\",\n            \"amount\": 1\n        },\n         {\n            \"productId\": \"3C7A334E-3B37-4B69-86AE-C229AEDC8FDD\",\n            \"amount\": 1\n        },\n        {\n            \"productId\": \"18269F0E-B43A-4271-810E-9958345F784A\",\n            \"amount\": 1\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"DRAFT\",\n    \"items\": [\n        {\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"113342\",\n            \"materialDesc\": \"\",\n            \"amount\": 1,\n            \"totalAmount\": 10,\n            \"locationStock\" : {\n                \"zoneId\" : \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            }\n        }\n       \n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4998,7 +4998,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"Done\",\n    \"countBy\": \"I AM\",\n    \"isActive\": 1,\n    \"items\": [\n       {\n            \"productId\": \"0D45C285-3280-4951-8D89-A485CF14CDCC\",\n            \"amount\": 1,\n            \"isActive\": 1\n        },\n         {\n            \"productId\": \"3C7A334E-3B37-4B69-86AE-C229AEDC8FDD\",\n            \"amount\": 1,\n            \"isActive\": 1\n        },\n        {\n            \"productId\": \"18269F0E-B43A-4271-810E-9958345F784A\",\n            \"amount\": 1,\n            \"isActive\": 1\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"DRAFT\",\n    \"items\": [\n        {\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"113342\",\n            \"materialDesc\": \"\",\n            \"amount\": 1,\n            \"totalAmount\": 10,\n             \"locationStock\" : {\n                \"zoneId\" : \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            }\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
