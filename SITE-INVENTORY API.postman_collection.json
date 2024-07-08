@@ -5109,7 +5109,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/count-stock?page=1&pageSize=10",
+									"raw": "{{BaseUrl}}/count-stock?page=1&pageSize=10&storeId=&status=DRAFT&startDate=08/07/2024&endDate=08/07/2024",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -5127,8 +5127,19 @@
 										},
 										{
 											"key": "storeId",
-											"value": "",
-											"disabled": true
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": "DRAFT"
+										},
+										{
+											"key": "startDate",
+											"value": "08/07/2024"
+										},
+										{
+											"key": "endDate",
+											"value": "08/07/2024"
 										}
 									]
 								}
@@ -5685,7 +5696,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/adjust-stock?page=1&pageSize=10&storeId=&status=PENDDING&StartDate=08/07/2024&EndDate=08/07/2024",
+									"raw": "{{BaseUrl}}/adjust-stock?page=1&pageSize=10&storeId=&status=PENDDING&startDate=08/07/2024&endDate=08/07/2024",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -5710,11 +5721,11 @@
 											"value": "PENDDING"
 										},
 										{
-											"key": "StartDate",
+											"key": "startDate",
 											"value": "08/07/2024"
 										},
 										{
-											"key": "EndDate",
+											"key": "endDate",
 											"value": "08/07/2024"
 										}
 									]
