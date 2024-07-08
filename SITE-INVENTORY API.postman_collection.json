@@ -2725,7 +2725,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "16DE968E-FAA5-4216-A533-5B136B323867"
 										}
 									]
 								}
@@ -5465,6 +5465,257 @@
 										{
 											"key": "id",
 											"value": "CD067A7F-BD40-433D-ABE5-00E9C99E5782"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AdjustStock",
+					"item": [
+						{
+							"name": "CreateAdjustStock",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"items\": [\n        {\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"113342\",\n            \"materialDesc\": \"\",\n            \"amount\": 1,\n            \"totalAmount\": 10,\n            \"locationStock\" : {\n                \"zoneId\" : \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            },\n            \"remark\": \"\"\n        }\n       \n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/adjust-stock"
+							},
+							"response": []
+						},
+						{
+							"name": "ApproveAdjustStock",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"adjustId\": \"\",\n    \"adjustStatus\": \"REJECT\", //\"APPROVED\"\n    \"remark\": \"???\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/adjust-stock/approve"
+							},
+							"response": []
+						},
+						{
+							"name": "GetAdjustStockList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/adjust-stock?page=1&pageSize=10&storeId=&status=PENDDING&StartDate=08/07/2024&EndDate=08/07/2024",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"adjust-stock"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "storeId",
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": "PENDDING"
+										},
+										{
+											"key": "StartDate",
+											"value": "08/07/2024"
+										},
+										{
+											"key": "EndDate",
+											"value": "08/07/2024"
 										}
 									]
 								}
