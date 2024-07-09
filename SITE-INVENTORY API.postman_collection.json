@@ -2781,7 +2781,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
+									"raw": "{\n    \"type\": \"Adjust\" // \"Count\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
