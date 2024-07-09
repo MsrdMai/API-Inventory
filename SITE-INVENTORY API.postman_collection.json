@@ -5732,6 +5732,109 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GetAdjustStockDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/adjust-stock/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"adjust-stock",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
