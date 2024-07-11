@@ -2725,7 +2725,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "16DE968E-FAA5-4216-A533-5B136B323867"
+											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
 										}
 									]
 								}
@@ -2781,7 +2781,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"type\": \"Adjust\" // \"Count\"\n}",
+									"raw": "{\n    \"type\": \"Count\" // \"Adjust\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2801,7 +2801,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "034F7E38-22F9-4CDB-90B2-30A21CFFEFA1"
 										}
 									]
 								}
@@ -4936,7 +4936,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"DRAFT\",\n    \"items\": [\n        {\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"113342\",\n            \"materialDesc\": \"\",\n            \"amount\": 1,\n            \"totalAmount\": 10,\n            \"locationStock\" : {\n                \"zoneId\" : \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            }\n        }\n       \n    ]\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"DRAFT\",\n    \"items\": [\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4998,7 +4998,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"countStatus\": \"DRAFT\",\n    \"items\": [\n        {\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"113342\",\n            \"materialDesc\": \"\",\n            \"amount\": 1,\n            \"totalAmount\": 10,\n             \"locationStock\" : {\n                \"zoneId\" : \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            }\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"034F7E38-22F9-4CDB-90B2-30A21CFFEFA1\",\n    \"countStatus\": \"COMPLETE\",\n    \"items\": []\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5017,7 +5017,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "89609698-0E78-4186-9A87-B690AC7EF890"
+											"value": "9C6D78FD-B59E-4A89-AC3D-5FD31A27F400"
 										}
 									]
 								}
@@ -5248,7 +5248,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "8A9F4CEA-5100-4359-9342-6DA36B336427"
+											"value": "3FABBB9B-9ACA-49BD-A01A-1995755328B0"
 										}
 									]
 								}
@@ -5696,7 +5696,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/adjust-stock?page=1&pageSize=10&storeId=&status=PENDDING&startDate=08/07/2024&endDate=08/07/2024",
+									"raw": "{{BaseUrl}}/adjust-stock?page=1&pageSize=10&storeId=034F7E38-22F9-4CDB-90B2-30A21CFFEFA1",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -5714,19 +5714,22 @@
 										},
 										{
 											"key": "storeId",
-											"value": ""
+											"value": "034F7E38-22F9-4CDB-90B2-30A21CFFEFA1"
 										},
 										{
 											"key": "status",
-											"value": "PENDDING"
+											"value": "",
+											"disabled": true
 										},
 										{
 											"key": "startDate",
-											"value": "08/07/2024"
+											"value": "",
+											"disabled": true
 										},
 										{
 											"key": "endDate",
-											"value": "08/07/2024"
+											"value": "",
+											"disabled": true
 										}
 									]
 								}
@@ -5829,7 +5832,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": null
+											"value": "23900B3E-413E-4358-8CB8-6E3F04413DC7"
 										}
 									]
 								}
