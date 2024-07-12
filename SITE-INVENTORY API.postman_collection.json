@@ -5109,7 +5109,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/count-stock?page=1&pageSize=10&storeId=&status=DRAFT&startDate=08/07/2024&endDate=08/07/2024",
+									"raw": "{{BaseUrl}}/count-stock?page=1&pageSize=10&storeId=&status=DRAFT&startDate=&endDate=08/07/2024",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -5135,7 +5135,7 @@
 										},
 										{
 											"key": "startDate",
-											"value": "08/07/2024"
+											"value": ""
 										},
 										{
 											"key": "endDate",
@@ -5600,7 +5600,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"adjustId\": \"\",\n    \"adjustStatus\": \"REJECT\", //\"APPROVED\"\n    \"remark\": \"???\"\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n           { \"countItemId\": \"\",\n             \"approve\": false\n           },\n            { \n            \"countItemId\": \"\",\n            \"approve\": true\n            }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
