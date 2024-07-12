@@ -5600,7 +5600,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n           { \"countItemId\": \"\",\n             \"approve\": false\n           },\n            { \n            \"countItemId\": \"\",\n            \"approve\": true\n            }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n        \"id1\",\n        \"id3\"\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5836,6 +5836,68 @@
 										}
 									]
 								}
+							},
+							"response": []
+						},
+						{
+							"name": "ApproveAdjustStock Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n        \"id1\",\n        \"id3\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/adjust-stock/reject"
 							},
 							"response": []
 						}
