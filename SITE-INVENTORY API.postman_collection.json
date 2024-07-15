@@ -4118,7 +4118,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"\",\n    \"poNo\": \"5701012014\",\n    \"items\": [\n        {\n            \"receiveItemId\": \"8D528F37-4B77-4121-97AB-FFC7C65901BE\",\n            \"receiveStatus\": \"RECEIVED\",\n            //  \"receiveStatus\": \"REJECTED\",\n            \"locationStock\": {\n                \"zoneId\": \"416CDF71-D28D-4C5F-89CD-7F5F50735B70\",\n                \"rowId\": \"EA345783-6E1B-4FC4-9518-AD9E5AE91ED5\",\n                \"floorId\": \"54FAEA65-323E-4DE5-9A3E-81F517C044BB\",\n                \"channelId\": \"9DE84AB8-7035-4337-B02E-FEF1F6812753\"\n            },\n             \"remark\": \"TEST\"\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"\",\n    \"poNo\": \"5701012014\",\n    \"items\": [\n        {\n            \"receiveItemId\": \"8D528F37-4B77-4121-97AB-FFC7C65901BE\",\n            \"receiveStatus\": \"RECEIVED\",\n            //  \"receiveStatus\": \"REJECTED\",\n            \"locationStock\": {\n                \"zoneId\": \"416CDF71-D28D-4C5F-89CD-7F5F50735B70\",\n                \"rowId\": \"EA345783-6E1B-4FC4-9518-AD9E5AE91ED5\",\n                \"floorId\": \"54FAEA65-323E-4DE5-9A3E-81F517C044BB\",\n                \"channelId\": \"9DE84AB8-7035-4337-B02E-FEF1F6812753\"\n            },\n             \"remark\": \"TEST\",\n             \"attachmentFiles\": \"\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4141,68 +4141,6 @@
 										}
 									]
 								}
-							},
-							"response": []
-						},
-						{
-							"name": "CreateReceive",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Schema is valid\", function () {",
-											"    var schema = {",
-											"        type: \"object\",",
-											"        properties: {",
-											"            statusCode: { type: \"number\" },",
-											"            responseCode: { type: \"string\" },",
-											"            message: { type: \"string\" },",
-											"            data: { type: \"object\" },",
-											"            timestamp: { type: \"number\" },",
-											"        },",
-											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
-											"    };",
-											"",
-											"    var response = pm.response.json();",
-											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
-											"});",
-											"",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "x-site-inventory-platform",
-										"value": "{{x-site-inventory-platform}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-device",
-										"value": "{{x-site-inventory-device}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-version",
-										"value": "{{x-site-inventory-version}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    /// แปะไว้ก่อน อันนี้จะสร้างผ่าน backend เอง\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    \"projectCode\": \"1278\",\n    \"poNo\": \"5701062622\",\n    \"vendorCode\": \"303197\",\n    \"vendorName\": \"บริษัท ลายวิจิตร จำกัด\",\n    \"items\": [\n        {\n            \"item\": \"00040\",\n            \"unitCode\": \"1278-022038\",\n            \"costCenter\": \"\",\n            \"matGroup\": \"D04\",\n            \"matGroupDesc\": \"ดวงโคม\",\n            \"materialId\": \"5060405\",\n            \"materialDesc\": \"โคมลอยกันน้ำLED,LUMAX LELWPF110 1S CT\",\n            \"quantity\": 1,\n            \"unit\": \"EA\",\n            \"scheduleDate\": null,\n            \"scheduleBy\": \"\",\n            \"receiveStatus\": \"PENDING\",\n            \"isCompleteItem\": false\n        },\n        {\n            \"item\": \"00050\",\n            \"unitCode\": \"1278-023039\",\n            \"matGroup\": \"D04\",\n            \"matGroupDesc\": \"ดวงโคม\",\n            \"materialId\": \"5060405\",\n            \"materialDesc\": \"โคมลอยกันน้ำLED,LUMAX LELWPF110 1S CT\",\n            \"quantity\": 1,\n            \"unit\": \"EA\",\n            \"scheduleDate\": null,\n            \"scheduleBy\": \"\",\n            \"receiveStatus\": \"PENDING\",\n            \"isCompleteItem\": false\n        }\n    ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{BaseUrl}}/receive"
 							},
 							"response": []
 						},
@@ -4564,7 +4502,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    // \"poNo\": \"\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0084\",\n    \"requisitionStatus\": \"DRAFT\",\n    \"remark\": \"LOL\",\n    \"vendor\": {\n        \"vendorCode\": \"0000302212\",\n        \"vendorName\": \"หจก. เซ็นทรัลการ์เด้น\"\n    },\n    \"items\": [\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": null,\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"E780C9A6-6CB8-4A39-A4D9-C3F9AEF2AF53\",\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062770\",\n            \"materialDesc\": \"AD3 ประตูบานเลื่อน 1 ติดตาย 1\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"A141D824-6EB0-4F18-BE01-231D62BBD217\",\n                \"floorId\": \"E62DC0E9-FEE5-4F3A-9729-9F48AD616440\",\n                \"channelId\": null\n            },\n            \"remark\": \"WOW\"\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    // \"poNo\": \"\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0084\",\n    \"requisitionStatus\": \"DRAFT\",\n    \"remark\": \"LOL\",\n    \"vendor\": {\n        \"vendorCode\": \"0000302212\",\n        \"vendorName\": \"หจก. เซ็นทรัลการ์เด้น\"\n    },\n    \"attachmentFiles\": [\"\", \"\"],\n    \"items\": [\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": null,\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"E780C9A6-6CB8-4A39-A4D9-C3F9AEF2AF53\",\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062770\",\n            \"materialDesc\": \"AD3 ประตูบานเลื่อน 1 ติดตาย 1\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"A141D824-6EB0-4F18-BE01-231D62BBD217\",\n                \"floorId\": \"E62DC0E9-FEE5-4F3A-9729-9F48AD616440\",\n                \"channelId\": null\n            },\n            \"remark\": \"WOW\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5488,68 +5426,6 @@
 					"name": "AdjustStock",
 					"item": [
 						{
-							"name": "CreateAdjustStock",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Schema is valid\", function () {",
-											"    var schema = {",
-											"        type: \"object\",",
-											"        properties: {",
-											"            statusCode: { type: \"number\" },",
-											"            responseCode: { type: \"string\" },",
-											"            message: { type: \"string\" },",
-											"            data: { type: \"object\" },",
-											"            timestamp: { type: \"number\" },",
-											"        },",
-											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
-											"    };",
-											"",
-											"    var response = pm.response.json();",
-											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
-											"});",
-											"",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "x-site-inventory-platform",
-										"value": "{{x-site-inventory-platform}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-device",
-										"value": "{{x-site-inventory-device}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-version",
-										"value": "{{x-site-inventory-version}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"items\": [\n        {\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"\",\n            \"materialId\": \"113342\",\n            \"materialDesc\": \"\",\n            \"amount\": 1,\n            \"totalAmount\": 10,\n            \"locationStock\" : {\n                \"zoneId\" : \"\",\n                \"rowId\": \"\",\n                \"floorId\": \"\",\n                \"channelId\": \"\"\n            },\n            \"remark\": \"\"\n        }\n       \n    ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{BaseUrl}}/adjust-stock"
-							},
-							"response": []
-						},
-						{
 							"name": "ApproveAdjustStock",
 							"event": [
 								{
@@ -5600,7 +5476,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n        \"id1\",\n        \"id3\"\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n        \"E2A59EF6-0723-49FC-ACD5-2274AD74D517\",\n        \"E2A59EF6-0723-49FC-ACD5-2274AD74D517\"\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5840,7 +5716,7 @@
 							"response": []
 						},
 						{
-							"name": "ApproveAdjustStock Copy",
+							"name": "RejectAdjustStock",
 							"event": [
 								{
 									"listen": "test",
@@ -5890,7 +5766,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n        \"id1\",\n        \"id3\"\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"81CF84E5-7937-4B1D-88E8-869B55709F3F\",\n    \"remark\": \"???\",\n    \"items\": [\n        \"E2A59EF6-0723-49FC-ACD5-2274AD74D517\",\n        \"E2A59EF6-0723-49FC-ACD5-2274AD74D517\"\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
