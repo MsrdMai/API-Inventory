@@ -4127,7 +4127,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/sap-integrate/getPoList/receive?poNo=5700957223&storeId=A8213C12-939E-44D6-9588-0891E7E76E8A",
+									"raw": "{{BaseUrl}}/sap-integrate/getPoList/receive?poNo=5700571982&storeId=034F7E38-22F9-4CDB-90B2-30A21CFFEFA1",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -4139,11 +4139,11 @@
 									"query": [
 										{
 											"key": "poNo",
-											"value": "5700957223"
+											"value": "5700571982"
 										},
 										{
 											"key": "storeId",
-											"value": "A8213C12-939E-44D6-9588-0891E7E76E8A"
+											"value": "034F7E38-22F9-4CDB-90B2-30A21CFFEFA1"
 										}
 									]
 								}
@@ -5571,7 +5571,23 @@
 										}
 									}
 								},
-								"url": "{{BaseUrl}}/adjust-stock/approve"
+								"url": {
+									"raw": "{{BaseUrl}}/adjust-stock/approve/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"adjust-stock",
+										"approve",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
 							},
 							"response": []
 						},
@@ -5834,7 +5850,7 @@
 								}
 							],
 							"request": {
-								"method": "POST",
+								"method": "PATCH",
 								"header": [
 									{
 										"key": "x-site-inventory-platform",
@@ -5861,7 +5877,23 @@
 										}
 									}
 								},
-								"url": "{{BaseUrl}}/adjust-stock/reject"
+								"url": {
+									"raw": "{{BaseUrl}}/adjust-stock/reject/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"adjust-stock",
+										"reject",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
 							},
 							"response": []
 						}
