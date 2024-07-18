@@ -4880,7 +4880,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"\",\n    \"requisitionStatus\": \"CANCEL\", // \"COMPLETE\"\n    \"siriDocGroupId\": \"\"\n}",
+									"raw": "{\n    \"storeId\": \"\",\n    \"requisitionStatus\": \"CANCEL\", // \"COMPLETE\"\n    \"attachmentFiles\": [\"\", \"\"]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
