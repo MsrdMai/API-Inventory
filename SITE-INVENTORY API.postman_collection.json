@@ -4,7 +4,7 @@
 		"name": "SITE-INVENTORY API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "28711756",
-		"_collection_link": "https://solar-space-569254.postman.co/workspace/863926ea-8dc0-4e47-a828-6a81e845eff3/collection/28711756-89a89bd3-764f-4567-86a7-45627bc307ef?action=share&creator=28711756&source=collection_link"
+		"_collection_link": "https://solar-space-569254.postman.co/workspace/Construction-API~863926ea-8dc0-4e47-a828-6a81e845eff3/collection/28711756-89a89bd3-764f-4567-86a7-45627bc307ef?action=share&source=collection_link&creator=28711756"
 	},
 	"item": [
 		{
@@ -2807,6 +2807,111 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GetStoreDefaultLocation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUrl}}/store/default-location?storeId=034F7E38-22F9-4CDB-90B2-30A21CFFEFA1&matGroup=B05&materialId=5052873",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"store",
+										"default-location"
+									],
+									"query": [
+										{
+											"key": "storeId",
+											"value": "034F7E38-22F9-4CDB-90B2-30A21CFFEFA1"
+										},
+										{
+											"key": "matGroup",
+											"value": "B05"
+										},
+										{
+											"key": "materialId",
+											"value": "5052873"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -4590,7 +4695,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"storeId\": \"A8213C12-939E-44D6-9588-0891E7E76E8A\",\n    // \"poNo\": \"\",\n    \"projectCode\": \"1368\",\n    \"unitCode\": \"1152-0084\",\n    \"requisitionStatus\": \"DRAFT\",\n    \"remark\": \"LOL\",\n    \"vendor\": {\n        \"vendorCode\": \"0000302212\",\n        \"vendorName\": \"หจก. เซ็นทรัลการ์เด้น\"\n    },\n    \"siriDocGroupId\": \"\",\n    \"attachmentFiles\": [\"\"],\n    \"items\": [\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": null,\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062772\",\n            \"materialDesc\": \"AW1 หน้าต่างบานกระทุ้งเดี่ยว\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"E780C9A6-6CB8-4A39-A4D9-C3F9AEF2AF53\",\n                \"floorId\": null,\n                \"channelId\": null\n            },\n            \"remark\": \"XOXOXOXO\"\n        },\n        {\n            \"receiveItemId\": null,\n            \"totalAmount\": 2,\n            \"amount\": 1,\n            \"materialGroup\": \"B10\",\n            \"materialGroupDesc\": \"ประตูหน้าต่างภายนอก\",\n            \"materialId\": \"5062770\",\n            \"materialDesc\": \"AD3 ประตูบานเลื่อน 1 ติดตาย 1\",\n            \"locationStock\": {\n                \"zoneId\": \"F7BFD4DF-B181-4B7E-842C-752374FD4450\",\n                \"rowId\": \"A141D824-6EB0-4F18-BE01-231D62BBD217\",\n                \"floorId\": \"E62DC0E9-FEE5-4F3A-9729-9F48AD616440\",\n                \"channelId\": null\n            },\n            \"remark\": \"WOW\"\n        }\n    ]\n}",
+									"raw": "{\n    \"storeId\": \"16DE968E-FAA5-4216-A533-5B136B323867\",\n    \"poNo\": \"5700557753\",\n    \"projectCode\": \"1200\",\n    \"unitCode\": \"1200-030850\",\n    \"employee\": {\n        \"empCode\": \"10000009\",\n        \"empEmail\": \"\"\n    },\n    \"siriDocGroupId\": \"0d39f0d6-e50b-4880-95a8-c92959bddb53\",\n    \"attachmentFiles\": [\n        \"0061AD5A-3669-4E1C-8D46-1A7DFC2CA277\",\n        \"8072E052-0F18-4D36-9CC5-015C73E6FC1A\"\n    ],\n    \"remark\": \"ฟฟฟฟฟ\",\n    \"items\": [\n        {\n            \"receiveItemId\": \"307D5448-863F-4DD4-BE82-AF5E5C4976C9\",\n            \"totalAmount\": 150,\n            \"amount\": 150,\n            \"materialGroup\": \"D06\",\n            \"materialGroupDesc\": \"ท่อร้อยสายไฟ\",\n            \"materialId\": \"5032861\",\n            \"materialDesc\": \"สกรูปลายสว่าน M7 ยาว1นิ้ว\",\n            \"remark\": null,\n            \"locationStock\": null\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
