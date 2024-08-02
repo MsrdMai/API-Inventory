@@ -63,6 +63,47 @@
 						"url": "{{BaseUrl}}/sessions"
 					},
 					"response": []
+				},
+				{
+					"name": "LoginVendor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsIjoiU2lyaWxhZGEuU29AU2Fuc2lyaS5jb20iLCJwZXJtaXNzaW9uIjp7InJvbGUiOnsicm9sZUNvZGUiOiJQQ0ZUMDEwMCIsInJvbGVOYW1lIjoiUENGIFRyYW5zcG9ydCBJVCBBZG1pbiJ9LCJmdW5jdGlvbnMiOltdfSwiaWF0IjoxNzA4Mzk5NjYwLCJleHAiOjE3MDg0ODYwNjB9.6Cky6l-DKD7hFTY_H2K7SqPD7j0sou28nLyha66HVnw'",
+									"",
+									"let [jwtHeader, jwtPayload, jwtSignature] = jwt.split('.')",
+									"",
+									"let jwtPayloadJsonString = atob(jwtPayload)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"password": "Ps#302505",
+								"username": "V302505.suratphan"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/sessions/vendor"
+					},
+					"response": []
 				}
 			],
 			"event": [
@@ -1624,7 +1665,8 @@
 											"    });",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1648,7 +1690,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{BaseUrl}}/store",
+									"raw": "{{BaseUrl}}/store?page=1&pageSize=10&warehouseId=F4AF5A0B-5B31-46E2-AE7B-D229934309CF",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -1658,18 +1700,15 @@
 									"query": [
 										{
 											"key": "page",
-											"value": "1",
-											"disabled": true
+											"value": "1"
 										},
 										{
 											"key": "pageSize",
-											"value": "10",
-											"disabled": true
+											"value": "10"
 										},
 										{
 											"key": "warehouseId",
-											"value": "08F09BDF-20E3-4F3B-8DE9-EC40A5A90E77",
-											"disabled": true
+											"value": "F4AF5A0B-5B31-46E2-AE7B-D229934309CF"
 										},
 										{
 											"key": "storeTypeId",
@@ -3746,6 +3785,110 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetUserVendorMaster",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+									"});",
+									"",
+									"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Each element in the data array has valid schema\", function () {",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"StoreID\": { \"type\": \"string\" },",
+									"            \"WarehouseID\": { \"type\": \"string\" },",
+									"            \"StoreName\": { \"type\": \"string\" },",
+									"            \"StoreTypeID\": { \"type\": \"string\" },",
+									"            \"StoreStatusID\": { \"type\": \"string\" },",
+									"            \"Remark\": { \"type\": \"string\" },",
+									"            \"IsActive\": { \"type\": \"boolean\" },",
+									"            \"CreateBy\": { \"type\": \"string\" },",
+									"            \"CreateDate\": { \"type\": \"string\" },",
+									"            \"UpdateBy\": { \"type\": \"string\" },",
+									"            \"UpdateDate\": { \"type\": \"string\" }",
+									"        }",
+									"    };",
+									"",
+									"    pm.response.json().data.forEach(function (store) {",
+									"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-site-inventory-platform",
+								"value": "{{x-site-inventory-platform}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-device",
+								"value": "{{x-site-inventory-device}}",
+								"type": "text"
+							},
+							{
+								"key": "x-site-inventory-version",
+								"value": "{{x-site-inventory-version}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/master/vendor-users?keyword=9200904",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"master",
+								"vendor-users"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "9200904"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -4587,7 +4730,8 @@
 											"",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -4620,19 +4764,24 @@
 									}
 								},
 								"url": {
-									"raw": "{{BaseUrl}}/receive/confirm-po/:receiveId",
+									"raw": "{{BaseUrl}}/receive/confirm-po/:storeId/:receiveId",
 									"host": [
 										"{{BaseUrl}}"
 									],
 									"path": [
 										"receive",
 										"confirm-po",
+										":storeId",
 										":receiveId"
 									],
 									"variable": [
 										{
+											"key": "storeId",
+											"value": ""
+										},
+										{
 											"key": "receiveId",
-											"value": "734954F1-9F57-4F79-8A99-4C2C0F049533"
+											"value": "7A9997B0-5794-4350-A3CE-7AF786B3D5AD"
 										}
 									]
 								}
