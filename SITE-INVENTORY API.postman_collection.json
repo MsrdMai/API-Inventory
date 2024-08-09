@@ -77,8 +77,7 @@
 									"",
 									"let jwtPayloadJsonString = atob(jwtPayload)"
 								],
-								"type": "text/javascript",
-								"packages": {}
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -869,160 +868,6 @@
 					]
 				},
 				{
-					"name": "Role",
-					"item": [
-						{
-							"name": "GetRoleList",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
-											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
-											"});",
-											"",
-											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
-											"    pm.response.json().data.forEach(function (store) {",
-											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
-											"    });",
-											"});",
-											"",
-											"pm.test(\"Response time is less than 500ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500);",
-											"});",
-											"",
-											"pm.test(\"Response time is less than 500ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(500);",
-											"});",
-											"",
-											"",
-											"",
-											"pm.test(\"Each element in the data array has valid schema\", function () {",
-											"    var schema = {",
-											"        \"type\": \"object\",",
-											"        \"properties\": {",
-											"            \"StoreID\": { \"type\": \"string\" },",
-											"            \"WarehouseID\": { \"type\": \"string\" },",
-											"            \"StoreName\": { \"type\": \"string\" },",
-											"            \"StoreTypeID\": { \"type\": \"string\" },",
-											"            \"StoreStatusID\": { \"type\": \"string\" },",
-											"            \"Remark\": { \"type\": \"string\" },",
-											"            \"IsActive\": { \"type\": \"boolean\" },",
-											"            \"CreateBy\": { \"type\": \"string\" },",
-											"            \"CreateDate\": { \"type\": \"string\" },",
-											"            \"UpdateBy\": { \"type\": \"string\" },",
-											"            \"UpdateDate\": { \"type\": \"string\" }",
-											"        }",
-											"    };",
-											"",
-											"    pm.response.json().data.forEach(function (store) {",
-											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
-											"    });",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{apiToken}}"
-									}
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "x-site-inventory-platform",
-										"value": "{{x-site-inventory-platform}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-device",
-										"value": "{{x-site-inventory-device}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-version",
-										"value": "{{x-site-inventory-version}}",
-										"type": "text"
-									}
-								],
-								"url": "{{BaseUrl}}/role"
-							},
-							"response": []
-						},
-						{
-							"name": "CreateRole",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Schema is valid\", function () {",
-											"    var schema = {",
-											"        type: \"object\",",
-											"        properties: {",
-											"            statusCode: { type: \"number\" },",
-											"            responseCode: { type: \"string\" },",
-											"            message: { type: \"string\" },",
-											"            data: { type: \"object\" },",
-											"            timestamp: { type: \"number\" },",
-											"        },",
-											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
-											"    };",
-											"",
-											"    var response = pm.response.json();",
-											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
-											"});",
-											"",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "x-site-inventory-platform",
-										"value": "{{x-site-inventory-platform}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-device",
-										"value": "{{x-site-inventory-device}}",
-										"type": "text"
-									},
-									{
-										"key": "x-site-inventory-version",
-										"value": "{{x-site-inventory-version}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"roleNameTH\" : \"PD\",\n    \"roleNameEN\" : \"Project Direater\",\n    \"order\" : 2\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{BaseUrl}}/role"
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Material",
 					"item": [
 						{
@@ -1665,8 +1510,7 @@
 											"    });",
 											"});"
 										],
-										"type": "text/javascript",
-										"packages": {}
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -1690,7 +1534,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{BaseUrl}}/store?page=1&pageSize=10&warehouseId=F4AF5A0B-5B31-46E2-AE7B-D229934309CF",
+									"raw": "{{BaseUrl}}/store?warehouseId=F4AF5A0B-5B31-46E2-AE7B-D229934309CF",
 									"host": [
 										"{{BaseUrl}}"
 									],
@@ -1700,11 +1544,13 @@
 									"query": [
 										{
 											"key": "page",
-											"value": "1"
+											"value": "1",
+											"disabled": true
 										},
 										{
 											"key": "pageSize",
-											"value": "10"
+											"value": "10",
+											"disabled": true
 										},
 										{
 											"key": "warehouseId",
@@ -3298,6 +3144,340 @@
 					]
 				},
 				{
+					"name": "ExUserConfig",
+					"item": [
+						{
+							"name": "CreateExUserConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Schema is valid\", function () {",
+											"    var schema = {",
+											"        type: \"object\",",
+											"        properties: {",
+											"            statusCode: { type: \"number\" },",
+											"            responseCode: { type: \"string\" },",
+											"            message: { type: \"string\" },",
+											"            data: { type: \"object\" },",
+											"            timestamp: { type: \"number\" },",
+											"        },",
+											"        required: [\"statusCode\", \"responseCode\", \"message\", \"data\", \"timestamp\"],",
+											"    };",
+											"",
+											"    var response = pm.response.json();",
+											"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"\",\n    \"username\": \"\",\n    \"fullNameTH\": \"\",\n    \"fullNameEN\": \"\",\n    \"vendorCode\": \"\",\n    \"vendorName\":\"\",\n    \"storeAccess\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/ex-users"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateExUserConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.statusCode).to.exist;",
+											"    pm.expect(responseData.responseCode).to.exist;",
+											"    pm.expect(responseData.message).to.exist;",
+											"    pm.expect(responseData.data).to.exist;",
+											"    pm.expect(responseData.timestamp).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"statusCode is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.to.be.a('number');",
+											"    pm.expect(responseData.statusCode).to.be.at.least(0);",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode should be a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is a string\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.be.a('string');",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"pm.test(\"Content-Type header is set to application/json\", function () {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has a valid timestamp\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.timestamp).to.exist.and.to.be.a('number');",
+											"});",
+											"",
+											"",
+											"pm.test(\"StatusCode should not be null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.statusCode).to.exist.and.not.to.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"responseCode is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.responseCode).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is not null\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData.message).to.exist.and.to.not.be.null;",
+											"});",
+											"",
+											"",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"// Test to check if the response time is within an acceptable range",
+											"pm.test(\"Response time is within acceptable range\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"\",\n    \"username\": \"\",\n    \"storeAccess\": [],\n    \"isActive\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/ex-users/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"ex-users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetExUsersList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{apiToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/ex-users?page=1&pageSize=10",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"ex-users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "GetProjectsMaster",
 					"event": [
 						{
@@ -3840,8 +4020,7 @@
 									"    });",
 									"});"
 								],
-								"type": "text/javascript",
-								"packages": {}
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3872,7 +4051,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/master/vendor-users?keyword=9200904",
+							"raw": "{{BaseUrl}}/master/vendor-users?keyword=หจก",
 							"host": [
 								"{{BaseUrl}}"
 							],
@@ -3883,7 +4062,7 @@
 							"query": [
 								{
 									"key": "keyword",
-									"value": "9200904"
+									"value": "หจก"
 								}
 							]
 						}
@@ -4112,7 +4291,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n   \"IM_EBELN\":\"5701062622\" //1:M\n   //\"IM_EBELN\":\"5701012014\" //1:M\n   \n}",
+									"raw": "{\n   \"IM_EBELN\":\"5700846221\" //1:M\n   //\"IM_EBELN\":\"5701012014\" //1:M\n   \n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4730,8 +4909,7 @@
 											"",
 											""
 										],
-										"type": "text/javascript",
-										"packages": {}
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -4782,6 +4960,117 @@
 										{
 											"key": "receiveId",
 											"value": "7A9997B0-5794-4350-A3CE-7AF786B3D5AD"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetReceiveAlreadyApprove",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an object with statusCode, responseCode, message, data, and timestamp properties\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('object').that.includes.all.keys('statusCode', 'responseCode', 'message', 'data', 'timestamp');",
+											"});",
+											"",
+											"pm.test(\"Each element in the data array has StoreID, WarehouseID, StoreName, StoreTypeID, StoreStatusID, Remark, IsActive, CreateBy, CreateDate, UpdateBy, and UpdateDate properties\", function () {",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(store).to.be.an('object').that.includes.all.keys('StoreID', 'WarehouseID', 'StoreName', 'StoreTypeID', 'StoreStatusID', 'Remark', 'IsActive', 'CreateBy', 'CreateDate', 'UpdateBy', 'UpdateDate');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Each element in the data array has valid schema\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"StoreID\": { \"type\": \"string\" },",
+											"            \"WarehouseID\": { \"type\": \"string\" },",
+											"            \"StoreName\": { \"type\": \"string\" },",
+											"            \"StoreTypeID\": { \"type\": \"string\" },",
+											"            \"StoreStatusID\": { \"type\": \"string\" },",
+											"            \"Remark\": { \"type\": \"string\" },",
+											"            \"IsActive\": { \"type\": \"boolean\" },",
+											"            \"CreateBy\": { \"type\": \"string\" },",
+											"            \"CreateDate\": { \"type\": \"string\" },",
+											"            \"UpdateBy\": { \"type\": \"string\" },",
+											"            \"UpdateDate\": { \"type\": \"string\" }",
+											"        }",
+											"    };",
+											"",
+											"    pm.response.json().data.forEach(function (store) {",
+											"        pm.expect(tv4.validate(store, schema)).to.be.true;",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-site-inventory-platform",
+										"value": "{{x-site-inventory-platform}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-device",
+										"value": "{{x-site-inventory-device}}",
+										"type": "text"
+									},
+									{
+										"key": "x-site-inventory-version",
+										"value": "{{x-site-inventory-version}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/receive/already-approve?page=1&pageSize=10&storeId=16DE968E-FAA5-4216-A533-5B136B323867",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"receive",
+										"already-approve"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "storeId",
+											"value": "16DE968E-FAA5-4216-A533-5B136B323867"
 										}
 									]
 								}
@@ -5076,7 +5365,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "C214FEE8-090C-4B37-AAA9-5A0B304CCF68"
+											"value": "E20172B2-E723-4358-B45D-C96259932CFA"
 										}
 									]
 								}
@@ -6281,7 +6570,10 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/NB1003201/Downloads/illus_approval_clipboard.png"
+									"src": [
+										"/Users/NB1003201/Downloads/illus_approval_clipboard.png",
+										"/Users/NB1003201/Desktop/Screenshot 2567-07-18 at 19.04.04.png"
+									]
 								},
 								{
 									"key": "requisitionId",
